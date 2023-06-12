@@ -117,3 +117,48 @@ int main()
 
 
 // } Driver Code Ends
+
+//CODESTUDIO - VECTOR SORTING
+
+#include <bits/stdc++.h>
+
+bool comp(vector<int> a, vector<int> b){
+    return a[1] > b[1];
+}
+
+int jobScheduling(vector<vector<int>> &jobs)
+{
+    // Write your code here
+
+    int n = jobs.size();
+
+    // sort as per profit
+    sort(jobs.begin(), jobs.end(), comp);
+
+    // find the highest deadline
+    int maxdead = jobs[0][0];
+    for(int i = 1; i <n; i++ ){
+        maxdead = max(maxdead, jobs[i][0]);
+    }
+
+    // make slot vector of maxdead size+1 becoz of 1 based indexing
+
+    vector<int> slot(maxdead+1, -1);
+
+    int profit = 0;
+
+    for(int i = 0; i < n; i++){
+        for(int j = jobs[i][0]; j > 0; j--){
+
+            if(slot[j] == -1){
+                slot[j] = i;
+                profit += jobs[i][1];
+                break;
+            }
+        }
+    }
+
+    return profit;
+
+
+}
